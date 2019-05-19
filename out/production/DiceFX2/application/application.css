@@ -1,0 +1,74 @@
+
+.root {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-background-color: transparent;
+
+}
+
+.dice1{
+    -fx-background-image: url("../images/1.jpg");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+}
+
+.dice2 {
+    -fx-background-image: url("../images/2.jpg");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+}
+
+.dice3{
+     -fx-background-image: url("../images/3.jpg");
+     -fx-background-size: 64.0 64.0;
+     -fx-background-repeat: no-repeat;
+     -fx-background-postion: center;
+ }
+
+.dice4{
+      -fx-background-image: url("../images/4.jpg");
+      -fx-background-size: 64.0 64.0;
+      -fx-background-repeat: no-repeat;
+      -fx-background-postion: center;
+  }
+
+.dice5{
+       -fx-background-image: url("../images/5.jpg");
+       -fx-background-size: 64.0 64.0;
+       -fx-background-repeat: no-repeat;
+       -fx-background-postion: center;
+   }
+
+.dice6{
+    -fx-background-image: url("../images/6.jpg");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+
+}
+
+.exit{
+    -fx-background-image: url("../images/exit.png");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+}
+
+
+.roll{
+    -fx-background-image: url("../images/roll.jpg");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+}
+
+.defaultDice{
+    -fx-background-image: url("../images/defaultdice.jpg");
+    -fx-background-size: 64.0 64.0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-postion: center;
+}
