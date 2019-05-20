@@ -180,9 +180,7 @@ public class Main extends Application {
                       Fullhouse = false;
                   }
 
-                  System.out.println("Fullhouse?");
-                  System.out.println(Fullhouse);
-
+                  System.out.println("Fullhouse?" + Fullhouse);
 
                   // Small straight / large straight
 
@@ -197,8 +195,7 @@ public class Main extends Application {
                           smallStraight = false;
                       }
 
-                  System.out.println("SmallStraight?");
-                  System.out.println(smallStraight);
+                  System.out.println("SmallStraight?" + smallStraight);
 
                   Boolean largeStraight;
 
@@ -209,9 +206,45 @@ public class Main extends Application {
                           largeStraight = false;
                       }
 
-                  System.out.println("largeStraight?");
-                  System.out.println(largeStraight);
+                  System.out.println("largeStraight?" + largeStraight);
 
+                  // Three of A Kind
+
+                  Boolean threeOfAKind;
+
+                  if ((ones.size() >= 3 || twos.size() >= 3 || threes.size() >= 3 || fours.size() >= 3 || fives.size() >= 3 ||
+                          sixes.size() >= 3)){
+                      threeOfAKind = true;
+              } else {
+                  threeOfAKind = false;
+              }
+
+                  System.out.println("threeofaKind?" + threeOfAKind);
+
+                  // Four of A Kind
+
+                  Boolean fourOfAKind;
+
+                  if ((ones.size() >= 4 || twos.size() >= 4 || threes.size() >= 4 || fours.size() >= 4 || fives.size() >= 4 ||
+                          sixes.size() >= 4)){
+                      fourOfAKind = true;
+                  } else {
+                      fourOfAKind = false;
+                  }
+
+                  System.out.println("fourofaKind?" + fourOfAKind);
+
+                  // Yatzy
+
+                  Boolean yatzy;
+
+                  if ((ones.size() == 5 || twos.size() == 5 || threes.size() == 5 || fours.size() ==  5|| fives.size() == 5 ||
+                          sixes.size() == 5)){
+                      yatzy = true;
+                  } else {
+                      yatzy = false;
+                  }
+                  System.out.println("Yatzy" + yatzy);
                   }
           });
 
