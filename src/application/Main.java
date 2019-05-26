@@ -13,6 +13,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static javafx.geometry.Pos.CENTER;
@@ -96,14 +97,14 @@ public class Main extends Application {
                   // cast String ID to Integer
                   int intID = Integer.parseInt(stringID);
 
-                  if (dices.get(intID).locked) {
-                      (dices.get(intID).locked) = false;
+                  if (dices.get(intID).isLocked()) {
+                      dices.get(intID).setLocked(false);
 
                       btn.setEffect(null);
 
                     //  buttons.get(intID).setEffect(null);
                   } else {
-                      (dices.get(intID).locked) = true;
+                      dices.get(intID).setLocked(true);
                       btn.setEffect(lightingGray);
                   }
               }
@@ -125,7 +126,7 @@ public class Main extends Application {
 
                   int id = 0;
                   while (id <= 4) {
-                      if (dices.get(id).locked) {
+                      if (dices.get(id).isLocked()) {
                       } else {
                           buttons.get(id).getStyleClass().clear();
                           buttons.get(id).getStyleClass().add("dice" + dices.get(id).rollTheDice());
@@ -133,119 +134,83 @@ public class Main extends Application {
                       id++;
                   }
 
-                  // Arraylist for Dicevalue
+                  HashMap<Integer, Integer> diceValue = new HashMap();
 
-                  ArrayList<Integer> ones = new ArrayList<Integer>();
-                  ArrayList<Integer> twos = new ArrayList<Integer>();
-                  ArrayList<Integer> threes = new ArrayList<Integer>();
-                  ArrayList<Integer> fours = new ArrayList<Integer>();
-                  ArrayList<Integer> fives = new ArrayList<Integer>();
-                  ArrayList<Integer> sixes = new ArrayList<Integer>();
-
-                  ArrayList<Integer> diceArray = new ArrayList<Integer>();
-
-                  diceArray.add(dices.get(0).randomNum);
-                  diceArray.add(dices.get(1).randomNum);
-                  diceArray.add(dices.get(2).randomNum);
-                  diceArray.add(dices.get(3).randomNum);
-                  diceArray.add(dices.get(4).randomNum);
-
-                  for (int i = 0; i < diceArray.size(); i++) {
-                      if (diceArray.get(i) == 1) ones.add(1);
-                      if (diceArray.get(i) == 2) twos.add(1);
-                      if (diceArray.get(i) == 3) threes.add(1);
-                      if (diceArray.get(i) == 4) fours.add(1);
-                      if (diceArray.get(i) == 5) fives.add(1);
-                      if (diceArray.get(i) == 6) sixes.add(1);
+                  // set the whole hashmap to zero (otherwise it would be "null"
+                  for (int i=1; i < 7; i++) {
+                      diceValue.put(i, 0);
                   }
 
-                  System.out.println(ones.size());
-                  System.out.println(twos.size());
-                  System.out.println(threes.size());
-                  System.out.println(fours.size());
-                  System.out.println(fives.size());
-                  System.out.println(sixes.size());
-                  System.out.println("*******************************");
+                  // set value into the hashmap
 
-                  //Full House
-
-                  Boolean Fullhouse;
-
-                  if ((ones.size() >= 3 || twos.size() >= 3 || threes.size() >= 3 ||     // Three of one kind
-                          fours.size() >= 3 || fives.size() >= 3 || sixes.size() >= 3) &&
-                          (ones.size() >= 2 || twos.size() >= 2 || threes.size() >= 2 ||    // Two of the other
-                                  fours.size() >= 2 || fives.size() >= 2 || sixes.size() >= 2)) {
-                      Fullhouse = true;
-                  } else {
-                      Fullhouse = false;
+                  for (int i=0; i < dices.size(); i++) {
+                      int val = dices.get(i).getRandomNum();
+                      if (diceValue.get(val) == null) {
+                          diceValue.put(val, 0);
+                      }
+                      diceValue.put(val, diceValue.get(val) + 1);
                   }
 
-                  System.out.println("Fullhouse?" + Fullhouse);
-
-                  // Small straight / large straight
-
-                  Boolean smallStraight;
-
-
-                      if ((ones.size() > 0 && twos.size() > 0 && threes.size() > 0 && fours.size() > 0) ||
-                              (twos.size() > 0 && threes.size() > 0 && fours.size() > 0 && fives.size() > 0) ||
-                              (threes.size() > 0 && fours.size() > 0 && fives.size() > 0 && sixes.size() > 0)) {
-                          smallStraight = true;
-                      } else {
-                          smallStraight = false;
-                      }
-
-                  System.out.println("SmallStraight?" + smallStraight);
-
-                  Boolean largeStraight;
-
-                      if ((ones.size() > 0 && twos.size() > 0 && threes.size() > 0 && fours.size() > 0 && fives.size() > 0) ||
-                              (twos.size() > 0 && threes.size() > 0 && fours.size() > 0 && fives.size() > 0 && sixes.size() > 0)) {
-                          largeStraight = true;
-                      } else {
-                          largeStraight = false;
-                      }
-
-                  System.out.println("largeStraight?" + largeStraight);
+                  System.out.println("einer " + diceValue.get(1));
+                  System.out.println("zweier " + diceValue.get(2));
+                  System.out.println("dreier " + diceValue.get(3));
+                  System.out.println("vierer " + diceValue.get(4));
+                  System.out.println("fünfer " + diceValue.get(5));
+                  System.out.println("sechser " + diceValue.get(6));
 
                   // Three of A Kind
 
-                  Boolean threeOfAKind;
+                  Boolean threeOfAKind =false;
+                  Integer threeOfAKindValue = 0;
 
-                  if ((ones.size() >= 3 || twos.size() >= 3 || threes.size() >= 3 || fours.size() >= 3 || fives.size() >= 3 ||
-                          sixes.size() >= 3)){
-                      threeOfAKind = true;
-              } else {
-                  threeOfAKind = false;
-              }
+                  for (int i=1; i < 7; i++) {
+                      if (diceValue.get(i) >= 3){
+                          threeOfAKind = true;
+                          threeOfAKindValue = i * 3;
+                          break;
+                      } else {
+                          threeOfAKind = false;
 
-                  System.out.println("threeofaKind?" + threeOfAKind);
+                      }
+                  }
+
+                  System.out.println("threeofaKind? " + threeOfAKind + " , " + threeOfAKindValue);
 
                   // Four of A Kind
 
-                  Boolean fourOfAKind;
+                  Boolean fourOfAKind =false;
+                  Integer fourOfAKindValue = 0;
 
-                  if ((ones.size() >= 4 || twos.size() >= 4 || threes.size() >= 4 || fours.size() >= 4 || fives.size() >= 4 ||
-                          sixes.size() >= 4)){
-                      fourOfAKind = true;
-                  } else {
-                      fourOfAKind = false;
+                  for (int i=1; i < 7; i++) {
+                      if (diceValue.get(i) >= 4){
+                          fourOfAKind = true;
+                          fourOfAKindValue = i * 4;
+                          break;
+                      } else {
+                          fourOfAKind = false;
+
+                      }
                   }
 
-                  System.out.println("fourofaKind?" + fourOfAKind);
+                  System.out.println("fourOfaKind? " + fourOfAKind + " , " + fourOfAKindValue);
 
                   // Yatzy
 
-                  Boolean yatzy;
+                  Boolean Yatzy =false;
 
-                  if ((ones.size() == 5 || twos.size() == 5 || threes.size() == 5 || fours.size() ==  5|| fives.size() == 5 ||
-                          sixes.size() == 5)){
-                      yatzy = true;
-                  } else {
-                      yatzy = false;
+                  for (int i=1; i < 7; i++) {
+                      if (diceValue.get(i) >= 5){
+                          Yatzy = true;
+                          break;
+                      } else {
+                          Yatzy = false;
+
+                      }
                   }
-                  System.out.println("Yatzy" + yatzy);
-                  }
+
+                  System.out.println("yatzy? " + Yatzy);
+
+              }
           });
 
           // Element zum root Node hinzufügen

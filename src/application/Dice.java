@@ -1,9 +1,11 @@
 package application;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+
 public class Dice {
 
-    boolean locked;
-    int randomNum;
+    private boolean locked;
+    private int randomNum;
 
     public int rollTheDice() {
         int max = 6;
@@ -11,7 +13,28 @@ public class Dice {
         this.randomNum = (int) ((Math.random() * max) + min);
         return this.randomNum;
     }
-/*
+
+    //Setter
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+
+    //Getter
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+
+    public int getRandomNum() {
+        return randomNum;
+    }
+
+
+
+    /*
     public String diceImage(int Num) {
 
         String Image;
