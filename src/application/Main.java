@@ -136,7 +136,7 @@ public class Main extends Application {
 
                   HashMap<Integer, Integer> diceValue = new HashMap();
 
-                  // set the whole hashmap to zero (otherwise it would be "null"
+                  // set the whole hashmap to zero (otherwise it would be "null")
                   for (int i=1; i < 7; i++) {
                       diceValue.put(i, 0);
                   }
@@ -145,9 +145,6 @@ public class Main extends Application {
 
                   for (int i=0; i < dices.size(); i++) {
                       int val = dices.get(i).getRandomNum();
-                      if (diceValue.get(val) == null) {
-                          diceValue.put(val, 0);
-                      }
                       diceValue.put(val, diceValue.get(val) + 1);
                   }
 
@@ -157,6 +154,23 @@ public class Main extends Application {
                   System.out.println("vierer " + diceValue.get(4));
                   System.out.println("fünfer " + diceValue.get(5));
                   System.out.println("sechser " + diceValue.get(6));
+
+                  // Pair
+
+                  Boolean pair = false;
+                  Integer pairValue = 0;
+
+                  for (int i=6; i > 0; i--) {
+                      if (diceValue.get(i) >= 2){
+                          pair = true;
+                          pairValue = i * 2;
+                          break;
+                      } else {
+                          pair = false;
+                      }
+                  }
+
+                  System.out.println("pair? " + pair + " , " + pairValue);
 
                   // Three of A Kind
 
@@ -194,21 +208,53 @@ public class Main extends Application {
 
                   System.out.println("fourOfaKind? " + fourOfAKind + " , " + fourOfAKindValue);
 
+                  // small Straight
+
+                  Boolean smallStraight = false;
+
+                  for (int i = 0; i < 3 ; i++) {
+                      if (diceValue.get(i + 1) >= 1 && diceValue.get(i + 2) >= 1
+                              && diceValue.get(i + 3) >= 1 && diceValue.get(i + 4) >= 1) {
+                          smallStraight = true;
+                          break;
+                      } else {
+                          smallStraight = false;
+                      }
+                  }
+
+                      System.out.println("SmallStraight? "  + smallStraight);
+
+                  // large Straight
+
+                  Boolean largeStraight = false;
+
+                  for (int i = 0; i < 2 ; i++) {
+                      if (diceValue.get(i + 1) >= 1 && diceValue.get(i + 2) >= 1
+                              && diceValue.get(i + 3) >= 1 && diceValue.get(i + 4) >= 1 && diceValue.get(i+5) >= 1) {
+                          largeStraight = true;
+                          break;
+                      } else {
+                          largeStraight = false;
+                      }
+                  }
+
+                  System.out.println("largeStraight? "  + largeStraight);
+
                   // Yatzy
 
                   Boolean Yatzy =false;
 
-                  for (int i=1; i < 7; i++) {
+                  for (int i = 1; i < 7; i++) {
                       if (diceValue.get(i) >= 5){
                           Yatzy = true;
                           break;
                       } else {
                           Yatzy = false;
-
                       }
                   }
 
                   System.out.println("yatzy? " + Yatzy);
+                  System.out.println("********************");
 
               }
           });
