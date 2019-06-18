@@ -1,5 +1,6 @@
 package application;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
+
+import javax.print.attribute.IntegerSyntax;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,22 +137,48 @@ public class Main extends Application {
                       id++;
                   }
 
+                  // Handler:
+
+                  for (int i = 0; i < 2; i++){
+
+                  }
+
                   HashMap<Integer, Integer> diceValue = new HashMap();
 
                   // set the whole hashmap to zero (otherwise it would be "null")
-                  for (int i=1; i < 7; i++) {
+                  for (int i = 1; i < 7; i++) {
                       diceValue.put(i, 0);
                   }
 
                   // set value into the hashmap
 
-                  for (int i=0; i < dices.size(); i++) {
+                  for (int i = 0; i < dices.size(); i++) {
                       int val = dices.get(i).getRandomNum();
                       diceValue.put(val, diceValue.get(val) + 1);
                   }
 
-                  System.out.println("einer " + diceValue.get(1));
-                  System.out.println("zweier " + diceValue.get(2));
+                  // ones
+                  boolean ones = false;
+                  int onesValues = 0;
+                  if (diceValue.get(1) >= 1) {
+                      ones = true;
+                      onesValues = diceValue.get(1);
+                  }
+
+                  System.out.println("1er: " + ones + " " + onesValues);
+
+                  // twos
+
+                  // twos
+                  boolean twos = false;
+                  int twosValues = 0;
+                  if (diceValue.get(2) >= 1) {
+                      twos = true;
+                      twosValues = diceValue.get(2) * 2;
+                  }
+
+                  System.out.println("2er: " + twos + " " + twosValues);
+
                   System.out.println("dreier " + diceValue.get(3));
                   System.out.println("vierer " + diceValue.get(4));
                   System.out.println("fünfer " + diceValue.get(5));
@@ -160,17 +189,44 @@ public class Main extends Application {
                   Boolean pair = false;
                   Integer pairValue = 0;
 
-                  for (int i=6; i > 0; i--) {
-                      if (diceValue.get(i) >= 2){
+                  for (int i = 6; i > 0; i--) {
+                      if (diceValue.get(i) >= 2) {
                           pair = true;
                           pairValue = i * 2;
                           break;
-                      } else {
-                          pair = false;
                       }
                   }
 
                   System.out.println("pair? " + pair + " , " + pairValue);
+
+
+                  // TwoPair
+
+                  Boolean firstPair = false;
+                  Boolean secondPair = false;
+                  Boolean twoPair = false;
+                  int index2 = 0;
+
+                  for (int i = 6; i > 0; i--) {
+                      if (diceValue.get(i) >= 2) {
+                          firstPair = true;
+                          index2 = i-1;
+                          break;
+                      }
+                  }
+                  for (int i = index2; i > 0; i--) {
+                      if (diceValue.get(i) >= 2) {
+                          secondPair = true;
+                          break;
+                      }
+                  }
+
+                  if (firstPair && secondPair) {
+                      twoPair = true;
+                  }
+
+                  System.out.println("twopair? " + twoPair);
+
 
                   // Three of A Kind
 
@@ -182,9 +238,6 @@ public class Main extends Application {
                           threeOfAKind = true;
                           threeOfAKindValue = i * 3;
                           break;
-                      } else {
-                          threeOfAKind = false;
-
                       }
                   }
 
@@ -200,13 +253,43 @@ public class Main extends Application {
                           fourOfAKind = true;
                           fourOfAKindValue = i * 4;
                           break;
-                      } else {
-                          fourOfAKind = false;
-
                       }
                   }
 
                   System.out.println("fourOfaKind? " + fourOfAKind + " , " + fourOfAKindValue);
+
+
+                  // FullHouse
+
+                  Boolean Two = false;
+                  Boolean Three = false;
+                  Boolean fullHouse = false;
+                  Integer indexThreeOfAKind = 0;
+
+                  // Three
+
+                  for (int i = 6; i > 0; i--) {
+                      if (diceValue.get(i) >= 3)   {
+                              Three = true;
+                              indexThreeOfAKind = i;
+                      }
+                  }
+
+
+
+                  // Pair
+                  for (Integer i = 6; i > 0; i--) {
+                      if (diceValue.get(i) >= 2 && (!i.equals(indexThreeOfAKind)))   {
+                          Two = true;
+                      }
+                  }
+
+                  if (Three && Two) {
+                      fullHouse = true;
+                  }
+
+                  System.out.println("fullHouse? " + fullHouse);
+
 
                   // small Straight
 
@@ -217,8 +300,6 @@ public class Main extends Application {
                               && diceValue.get(i + 3) >= 1 && diceValue.get(i + 4) >= 1) {
                           smallStraight = true;
                           break;
-                      } else {
-                          smallStraight = false;
                       }
                   }
 
@@ -233,8 +314,6 @@ public class Main extends Application {
                               && diceValue.get(i + 3) >= 1 && diceValue.get(i + 4) >= 1 && diceValue.get(i+5) >= 1) {
                           largeStraight = true;
                           break;
-                      } else {
-                          largeStraight = false;
                       }
                   }
 
@@ -242,19 +321,18 @@ public class Main extends Application {
 
                   // Yatzy
 
-                  Boolean Yatzy =false;
+                  Boolean yatzy = false;
 
                   for (int i = 1; i < 7; i++) {
                       if (diceValue.get(i) >= 5){
-                          Yatzy = true;
+                          yatzy = true;
                           break;
-                      } else {
-                          Yatzy = false;
                       }
                   }
 
-                  System.out.println("yatzy? " + Yatzy);
+                  System.out.println("yatzy? " + yatzy);
                   System.out.println("********************");
+                  System.out.println();
 
               }
           });
